@@ -23,7 +23,7 @@ class EmailService {
     const mailGenerator = new this.#GenerateTemplate({
       theme: "neopolitan",
       product: {
-        name: "Contacts book",
+        name: "Goit Project",
         link: "https://goitproject.herokuapp.com/login",
       },
     });

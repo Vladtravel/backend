@@ -15,11 +15,11 @@ const userSchema = new Schema(
         const reg = /\S+@\S+\.\S+/;
         return reg.test(String(value).toLowerCase());
       },
+    },
 
-      password: {
-        type: String,
-        required: ["true", "Password is required"],
-      },
+    password: {
+      type: String,
+      required: ["true", "Password is required"],
     },
 
     token: {
