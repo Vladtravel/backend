@@ -96,7 +96,6 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  
   const id = req.user.id;
   await Users.updateToken(id, null);
   return res.status(HttpCode.NO_CONTENT).json({});
@@ -135,12 +134,7 @@ const verify = async (req, res, next) => {
     const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
     if (user) {
       await Users.updateVerifyToken(user.id, true, null);
-      //   return res.redirect("https://goitproject.herokuapp.com/login");
-      return res.status(HttpCode.OK).json({
-        status: "success",
-        code: HttpCode.OK,
-        data: { message: "ЗАШЛИ" },
-      });
+      return res.redirect("https://goitproject.herokuapp.com/login");
     }
     return res.status(HttpCode.NOT_FOUND).json({
       status: "error",
