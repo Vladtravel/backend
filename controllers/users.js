@@ -70,17 +70,17 @@ const login = async (req, res, next) => {
     const id = user._id;
     const payload = { id };
     const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "4h" });
-    await Users.updateToken(id, token);
+    // await Users.updateToken(id, token);
     return res.status(HttpCode.OK).json({
       status: "success",
       code: HttpCode.OK,
-      token,
-      user: {
-        id: user.id,
-        email: user.email,
-        avatarURL: user.avatarURL,
-        verifyToken: user.verifyToken,
-      },
+      //   token,
+      //   user: {
+      //     id: user.id,
+      //     email: user.email,
+      //     avatarURL: user.avatarURL,
+      //     verifyToken: user.verifyToken,
+      //   },
     });
   } catch (e) {
     if (e.name === "TypeError") {
@@ -132,7 +132,12 @@ const verify = async (req, res, next) => {
     const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
     if (user) {
       await Users.updateVerifyToken(user.id, true, null);
-      return res.redirect("https://goitproject.herokuapp.com/login");
+      //   return res.redirect("https://goitproject.herokuapp.com/login");
+      return res.status(HttpCode.OK).json({
+        status: "success",
+        code: HttpCode.OK,
+        data: { message: "ЗАШЛИ" },
+      });
     }
     return res.status(HttpCode.NOT_FOUND).json({
       status: "error",
