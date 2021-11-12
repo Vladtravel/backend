@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Users = require("../repository/users");
+const Users = require("../model/userModel");
 const EmailService = require("../service/email");
 const { HttpCode } = require("../service/constants");
 const jimp = require("jimp");
@@ -34,7 +34,7 @@ const signup = async (req, res, next) => {
     const { id, avatarURL, verifyToken, email } = newUser;
     try {
       const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendVerifyEmail(verifyToken, email, name);
+      await emailService.sendVerifyEmail(verifyToken, email);
     } catch (e) {
       console.log(e.message);
     }
@@ -44,9 +44,7 @@ const signup = async (req, res, next) => {
       code: HttpCode.CREATED,
       user: {
         id,
-        name,
         email,
-        subscription,
         avatarURL,
         verifyToken,
       },
