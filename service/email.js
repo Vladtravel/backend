@@ -11,7 +11,7 @@ class EmailService {
         this.link = "http://localhost:3000";
         break;
       case "production":
-        this.link = "https://test-heroku-new.herokuapp.com";
+        this.link = "https://goitproject.herokuapp.com";
         break;
       default:
         this.link = "http://localhost:3000";
@@ -24,7 +24,7 @@ class EmailService {
       theme: "neopolitan",
       product: {
         name: "Contacts book",
-        link: "https://testappcrm.herokuapp.com/login",
+        link: "https://goitproject.herokuapp.com/login",
       },
     });
     const email = {
