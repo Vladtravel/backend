@@ -79,7 +79,7 @@ const login = async (req, res, next) => {
         id: user.id,
         email: user.email,
         avatarURL: user.avatarURL,
-        // verifyToken: user.verifyToken,
+        verifyToken: user.verifyToken,
       },
     });
   } catch (e) {
