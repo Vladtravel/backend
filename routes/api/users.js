@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { validateAuth, validateUpdateSub } = require("../../validation/validation");
+const { validateAuth } = require("../../validation/validation");
 const userController = require("../../controllers/users");
 const guard = require("../../service/guard");
 const { HttpCode } = require("../../service/constants");
@@ -21,12 +21,10 @@ const limiter = rateLimit({
 });
 
 router.post("/signup", validateAuth, userController.signup);
-// router.post("/login", validateAuth, limiter, userController.login);
-// router.post("/logout", guard, userController.logout);
-// router.get("/current", guard, userController.currentUser);
-// router.patch("/", guard, validateUpdateSub, userController.updateSub);
-// router.patch("/avatars", uploadAvatar.single("avatar"), guard, userController.updateAvatar);
-// router.get("/verify/:verificationToken", userController.verify);
-// router.post("/verify", userController.repeatEmailVerify);
+router.post("/login", validateAuth, limiter, userController.login);
+router.post("/logout", guard, userController.logout);
+router.get("/current", guard, userController.currentUser);
+router.get("/verify/:verificationToken", userController.verify);
+router.post("/verify", userController.repeatEmailVerify);
 
 module.exports = router;

@@ -30,9 +30,9 @@ class EmailService {
     const email = {
       body: {
         name,
-        intro: "Welcome to Contacts book! We're very excited to have you on board.",
+        intro: "Welcome to Goit Project! We're very excited to have you on board.",
         action: {
-          instructions: "To get started with Contacts book, please click here:",
+          instructions: "To get started with Goit Project, please click here:",
           button: {
             color: "#22BC66", // Optional action button color
             text: "Confirm your account",
