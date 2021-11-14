@@ -5,7 +5,14 @@
     "title": "Connections API"
   },
   "host": "goitproject.herokuapp.com",
-  "schemes": ["https"],
+  "schemes": ["https", "http"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "paths": {
     "/users/signup": {
       "post": {
