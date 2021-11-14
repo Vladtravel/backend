@@ -120,18 +120,21 @@ const currentUser = async (req, res, next) => {
 
 const saveAvatarUserToCloud = async (req) => {
   const pathFile = req.file.path;
-  const { public_id: idCloudAvatar, secure_url: avatarUrl } = await uploadToCloud(pathFile, {
-    public_id: req.user.idCloudAvatar?.replace("Avatars/", ""),
-    folder: "Avatars",
-    transformation: { width: 250, height: 250, crop: "pad" },
-  });
+  const { public_id: idCloudAvatar, secure_url: avatarUrl } =
+    await uploadToCloud(pathFile, {
+      public_id: req.user.idCloudAvatar?.replace("Avatars/", ""),
+      folder: "Avatars",
+      transformation: { width: 250, height: 250, crop: "pad" },
+    });
   await fs.unlink(pathFile);
   return { idCloudAvatar, avatarUrl };
 };
 
 const verify = async (req, res, next) => {
   try {
-    const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
+    const user = await Users.findByVerifyTokenEmail(
+      req.params.verificationToken
+    );
     if (user) {
       await Users.updateVerifyToken(user.id, true, null);
       return res.redirect("https://goitproject.herokuapp.com/login");
