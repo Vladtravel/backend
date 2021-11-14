@@ -65,7 +65,7 @@
         "tags": ["Пользователь"],
         "summary": "Разлогинить пользователя.",
         "produces": ["application/json"],
-        "description": "Чтобы разлогинится, необходимо ввести токен в меню Authorize(вверху справа) в формате <Bearer (токен)>",
+        "description": "Чтобы получить пользователя, необходимо ввести токен в меню Authorize(вверху справа) в формате <Bearer (токен)>",
         "security": [
           {
             "Bearer": []
@@ -78,14 +78,27 @@
         }
       }
     },
-    "/users/current": {
-      "get": {
+    "/users/verify": {
+      "post": {
         "tags": ["Пользователь"],
-        "summary": "Logs out current logged in user session",
-        "description": "",
-        "operationId": "logoutUser",
-        "produces": ["application/xml", "application/json"],
-        "parameters": [],
+        "summary": "Повторный запрос на мейл",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Создаем обьект пользователя.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -93,34 +106,42 @@
         }
       }
     },
-    "/user/{username}": {
+    "/users/current": {
+      "get": {
+        "tags": ["Пользователь"],
+        "summary": "Получить пользователя по токену",
+        "description": "Чтобы разлогинится, необходимо ввести токен в меню Authorize(вверху справа) в формате <Bearer (токен)>",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/users/verify/{verificationToken}": {
       "get": {
         "tags": ["Пользователь"],
         "summary": "Get user by user name",
         "description": "",
         "operationId": "getUserByName",
-        "produces": ["application/xml", "application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "username",
+            "name": "verificationToken",
             "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
+          "default": {
+            "description": "successful operation"
           }
         }
       }
