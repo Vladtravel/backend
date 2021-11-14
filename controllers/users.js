@@ -132,16 +132,16 @@ const saveAvatarUserToCloud = async (req) => {
 const verify = async (req, res, next) => {
   try {
     const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
-    if (!user) {
-      return res.status(HttpCode.NOT_FOUND).json({
-        status: "error",
-        code: HttpCode.NOT_FOUND,
-        message: "Invalid token. Contact to administration",
-      });
+    if (user) {
+      await Users.updateVerifyToken(user.id, true, null);
+      return res.redirect("https://goitproject.herokuapp.com/login", HttpCode.OK);
     }
 
-    await Users.updateVerifyToken(user.id, true, null);
-    return res.redirect("https://goitproject.herokuapp.com/login");
+    return res.status(HttpCode.NOT_FOUND).json({
+      status: "error",
+      code: HttpCode.NOT_FOUND,
+      message: "Invalid token. Contact to administration",
+    });
   } catch (error) {
     next(error);
   }
