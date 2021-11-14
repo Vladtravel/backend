@@ -127,7 +127,7 @@
     "/users/verify/{verificationToken}": {
       "get": {
         "tags": ["Пользователь"],
-        "summary": "Get user by user name",
+        "summary": "Верификация пользователя",
         "description": "",
         "operationId": "getUserByName",
         "produces": ["application/json"],
