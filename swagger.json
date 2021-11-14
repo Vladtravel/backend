@@ -124,7 +124,7 @@
         }
       }
     },
-    "/users/{verificationToken}": {
+    "/users/verify/{verificationToken}": {
       "get": {
         "tags": ["Пользователь"],
         "summary": "Get user by user name",
