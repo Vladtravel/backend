@@ -5,10 +5,14 @@ const helmet = require("helmet");
 const boolParser = require("express-query-boolean");
 const { HttpCode } = require("./service/constants");
 
+const projectsRouter = require("./routes/api/projects");
+const sprintsRouter = require("./routes/api/sprints");
+const tasksRouter = require("./routes/api/tasks");
 const usersRouter = require("./routes/api/users");
-// const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -21,8 +25,11 @@ app.use(cors());
 app.use(express.json({ limit: 10000 }));
 app.use(boolParser());
 
+app.use("/api/projects", projectsRouter);
+app.use("/sprints", sprintsRouter);
+app.use("/tasks", tasksRouter);
 app.use("/users", usersRouter);
-// app.use("/contacts", contactsRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
   res.status(HttpCode.NOT_FOUND).json({ message: "Not found" });
