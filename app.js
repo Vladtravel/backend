@@ -29,7 +29,7 @@ app.use("/api/projects", projectsRouter);
 app.use("/sprints", sprintsRouter);
 app.use("/tasks", tasksRouter);
 app.use("/users", usersRouter);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
   res.status(HttpCode.NOT_FOUND).json({ message: "Not found" });
