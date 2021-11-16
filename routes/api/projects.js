@@ -1,14 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
+const guard = require("../../service/guard");
+
 const ProjectsController = require("../../controllers/projects");
 
-router.get("/", ProjectsController.getAll);
+router.get("/", guard, ProjectsController.getAll);
 
-router.get("/:id", ProjectsController.getById);
+router.get("/:id", guard, ProjectsController.getById);
 
-router.post("/", ProjectsController.create);
+router.post("/", guard, ProjectsController.create);
 
-router.delete("/:id", ProjectsController.remove);
+router.delete("/:id", guard, ProjectsController.remove);
+
+router.patch("/:id/name", guard, ProjectsController.edit);
+
+router.post("/:id/owners", guard, ProjectsController.addOwner);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const projectSchema = new Schema(
   {
@@ -10,6 +10,12 @@ const projectSchema = new Schema(
       type: String,
       required: [true, "Set description for project"],
     },
+    owners: [
+      {
+        type: SchemaTypes.ObjectId,
+        ref: "user",
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
