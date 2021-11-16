@@ -4,8 +4,8 @@ const findAll = async (option) => {
   return await Project.find(option);
 };
 
-const findById = async (id) => {
-  return await Project.findById(id);
+const findById = async (options) => {
+  return await Project.findOne(options);
 };
 
 const create = async (options) => {
@@ -14,10 +14,35 @@ const create = async (options) => {
   return await project.save();
 };
 
-const remove = async (id) => {
+const edit = async (projectId, body, userId) => {
+  const result = await Project.findOneAndUpdate(
+    { _id: projectId, owners: userId },
+    { ...body },
+    { new: true }
+  );
+
+  return result;
+};
+
+const addOwner = async (projectId, userId, newOwnerId) => {
+  console.log(newOwnerId);
+
+  const result = await Project.findOneAndUpdate(
+    { _id: projectId, owners: userId },
+    { $push: { owners: newOwnerId } },
+    { new: true }
+  );
+
+  console.log(result);
+
+  return result;
+};
+
+const remove = async (id, userId) => {
   try {
     const result = await Project.findOneAndRemove({
       _id: id,
+      owner: userId,
     });
 
     return result;
@@ -30,5 +55,7 @@ module.exports = {
   findAll,
   findById,
   create,
+  edit,
+  addOwner,
   remove,
 };
