@@ -24,7 +24,7 @@ class EmailService {
       theme: "neopolitan",
       product: {
         name: "Goit Project",
-        link: "https://goitapp.herokuapp.com/login",
+        link: "https://goitapp.netlify.app/login",
       },
     });
     const email = {
