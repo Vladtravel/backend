@@ -134,9 +134,7 @@ const verify = async (req, res, next) => {
     const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
     if (user) {
       await Users.updateVerifyToken(user.id, true, null);
-      // return res.redirect(HttpCode.OK, "https://goitapp.herokuapp.com/login");
-      redirect("https://goitapp.herokuapp.com/login");
-      return res.status(HttpCode.OK);
+      return res.redirect("https://goitapp.herokuapp.com/login");
     }
 
     return res.status(HttpCode.NOT_FOUND).json({
