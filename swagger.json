@@ -369,7 +369,12 @@
             "description": "Получаем обьект спринта по id.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Sprints"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -380,8 +385,52 @@
         }
       }
     },
-    "/:projectsId/sprints/:sprintsId/tasks": {},
-    "/:projectId/sprints/:sprintId/tasks/:taskId": {}
+    "/:projectsId/sprints/:sprintsId/tasks": {
+      "post": {
+        "tags": ["Задачи"],
+        "summary": "Добавление задачи",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Добавляем обьект спринта.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tasks"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/:projectId/sprints/:sprintId/tasks/:taskId": {
+      "post": {
+        "tags": ["Задачи"],
+        "summary": "Удаление задачи по id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Добавляем обьект спринта.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tasks"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "User": {
