@@ -1,4 +1,5 @@
 const ProjectModel = require("../model/projectModel");
+const SprintModel = require("../model/sprintModel");
 const UserModel = require("../model/userModel");
 
 const getAll = async (req, res, next) => {
@@ -18,12 +19,20 @@ const getById = async (req, res, next) => {
     const userId = req.user._id;
 
     const result = await ProjectModel.findById({
-      _id: req.params.id,
+      _id: req.params.projectId,
       owners: userId,
     });
 
+    const sprints = await SprintModel.findAll({
+      project: req.params.id,
+    });
+
     if (result) {
-      return res.json({ status: "success", code: 200, data: { result } });
+      return res.json({
+        status: "success",
+        code: 200,
+        data: { ...result._doc, sprints },
+      });
     }
 
     next();
@@ -35,8 +44,6 @@ const getById = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const userId = req.user._id;
-
-    console.log(userId);
 
     const newProject = await ProjectModel.create({
       ...req.body,
@@ -56,7 +63,7 @@ const edit = async (req, res, next) => {
     const userId = req.user._id;
 
     const updatedProject = await ProjectModel.edit(
-      req.params.id,
+      req.params.projectId,
       req.body,
       userId
     );
@@ -84,7 +91,7 @@ const addOwner = async (req, res, next) => {
     const newOwnerId = newOwner._id;
 
     const updatedProject = await ProjectModel.addOwner(
-      req.params.id,
+      req.params.projectId,
       userId,
       newOwnerId
     );
@@ -107,7 +114,7 @@ const remove = async (req, res, next) => {
   try {
     const userId = req.user._id;
 
-    const isCompleted = await ProjectModel.remove(req.params.id, userId);
+    const isCompleted = await ProjectModel.remove(req.params.projectId, userId);
 
     if (isCompleted) {
       return res.json({
