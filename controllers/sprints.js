@@ -13,17 +13,17 @@ const getById = async (req, res, next) => {
   try {
     const userId = req.user._id;
 
-    const result = await SprintsModel.findById(
+    const data = await SprintsModel.findById(
       req.params.projectId,
       req.params.sprintId,
       userId
     );
 
-    if (result) {
+    if (data) {
       return res.json({
         status: "success",
         code: 200,
-        data: { result },
+        data,
       });
     }
   } catch (error) {
@@ -35,7 +35,7 @@ const create = async (req, res, next) => {
   try {
     const userId = req.user._id;
 
-    const result = await SprintsModel.create(
+    const data = await SprintsModel.create(
       {
         ...req.body,
         project: req.params.projectId,
@@ -44,10 +44,8 @@ const create = async (req, res, next) => {
       req.params.projectId
     );
 
-    if (result) {
-      return res
-        .status(201)
-        .json({ status: "success", code: 201, data: { result } });
+    if (data) {
+      return res.status(201).json({ status: "success", code: 201, data });
     }
   } catch (error) {
     next(error);
@@ -58,19 +56,18 @@ const create = async (req, res, next) => {
 
 const edit = async (req, res, next) => {
   try {
-    console.log("-----------------");
-    const result = await SprintsModel.edit(
+    const data = await SprintsModel.edit(
       req.body,
       req.params.projectId,
       req.params.sprintId,
       req.user._id
     );
-    console.log(result);
-    if (result) {
+
+    if (data) {
       return res.json({
         status: "success",
         code: 200,
-        data: { result },
+        data,
       });
     }
 
@@ -110,18 +107,18 @@ const remove = async (req, res, next) => {
 
 const addTask = async (req, res, next) => {
   try {
-    const result = await SprintsModel.addTask(
+    const data = await SprintsModel.addTask(
       req.body,
       req.params.projectsId,
       req.params.sprintsId,
       req.user._id
     );
     console.log(result);
-    if (result) {
+    if (data) {
       return res.json({
         status: "success",
         code: 201,
-        data: { result },
+        data,
       });
     }
 
@@ -133,18 +130,18 @@ const addTask = async (req, res, next) => {
 
 const removeTask = async (req, res, next) => {
   try {
-    const result = await SprintsModel.removeTask(
+    const data = await SprintsModel.removeTask(
       req.params.projectId,
       req.params.sprintId,
       req.params.taskId,
       req.user._id
     );
     console.log(result);
-    if (result) {
+    if (data) {
       return res.json({
         status: "success",
         code: 200,
-        data: { result },
+        data,
       });
     }
 
