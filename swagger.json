@@ -302,7 +302,28 @@
             "description": "Получаем обьект спринта по id.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Sprints"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Спринты"],
+        "summary": "Удаление спринта по id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Получаем обьект спринта по id.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sprints"
             }
           }
         ],
@@ -313,9 +334,52 @@
         }
       }
     },
-    "/:projectId/sprints": {},
-    "/:projectId/sprints/:sprintId/name": {},
-    "/:projectId/sprints/:sprintId/": {},
+    "/:projectId/sprints": {
+      "post": {
+        "tags": ["Спринты"],
+        "summary": "Добавление спринта",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Добавляем обьект спринта.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sprints"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/:projectId/sprints/:sprintId/name": {
+      "patch": {
+        "tags": ["Спринты"],
+        "summary": "Меняем имя спринта",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Получаем обьект спринта по id.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sprints"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/:projectsId/sprints/:sprintsId/tasks": {},
     "/:projectId/sprints/:sprintId/tasks/:taskId": {}
   },
@@ -345,7 +409,7 @@
         }
       },
       "xml": {
-        "name": "User"
+        "name": "Project"
       }
     },
     "Sprints": {
@@ -359,13 +423,24 @@
         },
         "duration": {
           "type": "Number"
-        },
-        "project": {
-          "type": "SchemaTypes.ObjectId"
         }
       },  
       "xml": {
-        "name": "User"
+        "name": "Sprint"
+      }
+    },
+    "Tasks": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "sheduledHours": {
+          "type": "Number"
+        }
+      },  
+      "xml": {
+        "name": "Task"
       }
     }
   }
