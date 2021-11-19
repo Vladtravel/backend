@@ -6,8 +6,6 @@ const boolParser = require("express-query-boolean");
 const { HttpCode } = require("./service/constants");
 
 const projectsRouter = require("./routes/api/projects");
-const sprintsRouter = require("./routes/api/sprints");
-const tasksRouter = require("./routes/api/tasks");
 const usersRouter = require("./routes/api/users");
 
 const app = express();
@@ -26,8 +24,6 @@ app.use(express.json({ limit: 10000 }));
 app.use(boolParser());
 
 app.use("/api/projects", projectsRouter);
-app.use("/sprints", sprintsRouter);
-app.use("/tasks", tasksRouter);
 app.use("/users", usersRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

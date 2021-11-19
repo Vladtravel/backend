@@ -1,4 +1,17 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
+
+const taskSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Set name for project"],
+    },
+    sheduledHours: {
+      type: Number,
+    },
+  },
+  { versionKey: false, timestamps: true }
+);
 
 const sprintSchema = new Schema(
   {
@@ -6,9 +19,17 @@ const sprintSchema = new Schema(
       type: String,
       required: [true, "Set name for project"],
     },
-    description: {
-      type: String,
+    endDate: {
+      type: Date,
     },
+    duration: {
+      type: Number,
+    },
+    project: {
+      type: SchemaTypes.ObjectId,
+      ref: "project",
+    },
+    tasks: [taskSchema],
   },
   { versionKey: false, timestamps: true }
 );
