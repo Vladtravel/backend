@@ -25,15 +25,17 @@ const edit = async (projectId, body, userId) => {
 };
 
 const addOwner = async (projectId, userId, newOwnerId) => {
-  console.log(newOwnerId);
+  const check = await Project.findOne({ _id: projectId, owners: userId });
+
+  if (check.owners.includes(newOwnerId)) {
+    return false;
+  }
 
   const result = await Project.findOneAndUpdate(
     { _id: projectId, owners: userId },
     { $push: { owners: newOwnerId } },
     { new: true }
   );
-
-  console.log(result);
 
   return result;
 };

@@ -193,7 +193,7 @@
     "/api/projects/:id": {
       "get": {
         "tags": ["Проекты"],
-        "summary": "Получение проекта по id",
+        "summary": "Получение проекта и спринтов по id",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -202,7 +202,7 @@
             "description": "Получаем обьект проекта по id.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Projects"
             }
           }
         ],
@@ -289,7 +289,35 @@
           }
         }
       }
-    }
+    },
+    "/:projectId/sprints/:sprintId": {
+      "get": {
+        "tags": ["Спринты"],
+        "summary": "Получение спринта и задач по id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Получаем обьект спринта по id.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/:projectId/sprints": {},
+    "/:projectId/sprints/:sprintId/name": {},
+    "/:projectId/sprints/:sprintId/": {},
+    "/:projectsId/sprints/:sprintsId/tasks": {},
+    "/:projectId/sprints/:sprintId/tasks/:taskId": {}
   },
   "definitions": {
     "User": {
@@ -316,6 +344,26 @@
           "type": "string"
         }
       },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Sprints": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "date"
+        },
+        "duration": {
+          "type": "Number"
+        },
+        "project": {
+          "type": "SchemaTypes.ObjectId"
+        }
+      },  
       "xml": {
         "name": "User"
       }

@@ -4,17 +4,52 @@ const router = express.Router();
 const guard = require("../../service/guard");
 
 const ProjectsController = require("../../controllers/projects");
+const SprintsController = require("../../controllers/sprints");
+
+// Работа с проектами
 
 router.get("/", guard, ProjectsController.getAll);
 
-router.get("/:id", guard, ProjectsController.getById);
+router.get("/:projectId", guard, ProjectsController.getById);
 
 router.post("/", guard, ProjectsController.create);
 
-router.delete("/:id", guard, ProjectsController.remove);
+router.delete("/:projectId", guard, ProjectsController.remove);
 
-router.patch("/:id/name", guard, ProjectsController.edit);
+router.patch("/:projectId/name", guard, ProjectsController.edit);
 
-router.post("/:id/owners", guard, ProjectsController.addOwner);
+router.post("/:projectId/owners", guard, ProjectsController.addOwner);
+
+// Работа со спринтами
+
+router.get("/:projectId/sprints/:sprintId", guard, SprintsController.getById);
+
+router.post("/:projectId/sprints", guard, SprintsController.create);
+
+router.patch(
+  "/:projectId/sprints/:sprintId/name",
+  guard,
+  SprintsController.edit
+);
+
+router.delete(
+  "/:projectId/sprints/:sprintId/",
+  guard,
+  SprintsController.remove
+);
+
+// Работа с задачами
+
+router.post(
+  "/:projectsId/sprints/:sprintsId/tasks",
+  guard,
+  SprintsController.addTask
+);
+
+router.delete(
+  "/:projectId/sprints/:sprintId/tasks/:taskId",
+  guard,
+  SprintsController.removeTask
+);
 
 module.exports = router;
