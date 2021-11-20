@@ -409,7 +409,7 @@
       }
     },
     "/:projectId/sprints/:sprintId/tasks/:taskId": {
-      "post": {
+      "delete": {
         "tags": ["Задачи"],
         "summary": "Удаление задачи по id",
         "produces": ["application/json"],
