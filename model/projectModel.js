@@ -5,7 +5,7 @@ const findAll = async (option) => {
 };
 
 const findById = async (options) => {
-  return await Project.findOne(options);
+  return await Project.findOne(options).populate("owners", "email");
 };
 
 const create = async (options) => {
