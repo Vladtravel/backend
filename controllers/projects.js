@@ -24,7 +24,7 @@ const getById = async (req, res, next) => {
     });
 
     const sprints = await SprintModel.findAll({
-      project: req.params.id,
+      project: req.params.projectId,
     });
 
     if (result) {
