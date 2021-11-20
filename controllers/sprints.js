@@ -1,14 +1,5 @@
 const SprintsModel = require("../model/sprintModel");
 
-// const getAll = async (req, res, next) => {
-//   try {
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-//projectId, sprintId, userId)
-
 const getById = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -26,6 +17,8 @@ const getById = async (req, res, next) => {
         data,
       });
     }
+
+    return next();
   } catch (error) {
     next(error);
   }
@@ -62,6 +55,8 @@ const edit = async (req, res, next) => {
       req.params.sprintId,
       req.user._id
     );
+
+    console.log(data);
 
     if (data) {
       return res.json({
@@ -105,15 +100,38 @@ const remove = async (req, res, next) => {
 
 //Работа с задачами
 
+const findTasks = async (req, res, next) => {
+  try {
+    const data = await SprintsModel.findTasks(
+      req.body,
+      req.params.projectId,
+      req.params.sprintId,
+      req.user._id
+    );
+    // console.log(result);
+    if (data) {
+      return res.json({
+        status: "success",
+        code: 201,
+        data,
+      });
+    }
+
+    return next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addTask = async (req, res, next) => {
   try {
     const data = await SprintsModel.addTask(
       req.body,
-      req.params.projectsId,
-      req.params.sprintsId,
+      req.params.projectId,
+      req.params.sprintId,
       req.user._id
     );
-    console.log(result);
+    console.log(data);
     if (data) {
       return res.json({
         status: "success",
@@ -136,7 +154,7 @@ const removeTask = async (req, res, next) => {
       req.params.taskId,
       req.user._id
     );
-    console.log(result);
+
     if (data) {
       return res.json({
         status: "success",
@@ -156,6 +174,7 @@ module.exports = {
   create,
   edit,
   remove,
+  findTasks,
   addTask,
   removeTask,
 };
