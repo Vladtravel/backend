@@ -263,7 +263,7 @@
       }
     },
     "/api/projects/:id/owners": {
-      "patch": {
+      "post": {
         "tags": ["Проекты"],
         "summary": "Добавление пользователя в проект по email",
         "produces": ["application/json"],

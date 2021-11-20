@@ -40,8 +40,14 @@ router.delete(
 
 // Работа с задачами
 
+router.get(
+  "/:projectId/sprints/:sprintId/tasks",
+  guard,
+  SprintsController.findTasks
+);
+
 router.post(
-  "/:projectsId/sprints/:sprintsId/tasks",
+  "/:projectId/sprints/:sprintId/tasks",
   guard,
   SprintsController.addTask
 );

@@ -70,12 +70,36 @@ const remove = async (projectId, sprintId, userId) => {
 
 // req.body, req.params.projectId, req.params.sprintId, req.user._id;
 
-const addTask = async (body, projectId, sprintId, userId) => {
+const findTasks = async (body, projectId, sprintId, userId) => {
   const check = await Project.findOne({ _id: projectId, owners: userId });
 
   if (!check.owners.includes(userId)) {
     return false;
   }
+
+  const result = await Sprint.find(
+    { _id: sprintId, project: projectId }
+    // { $push: { tasks: body } },
+    // { new: true }
+  );
+
+  console.log(result);
+
+  return result;
+};
+
+const addTask = async (body, projectId, sprintId, userId) => {
+  const check = await Project.findOne({ _id: projectId, owners: userId });
+
+  if (!check.owners.includes(userId)) {
+    console.log("false");
+    return false;
+  } else {
+    console.log("true");
+  }
+
+  console.log("------------------");
+  console.log(body, projectId, sprintId, userId);
 
   const result = await Sprint.findOneAndUpdate(
     { _id: sprintId, project: projectId },
@@ -96,6 +120,7 @@ const removeTask = async (projectId, sprintId, taskId, userId) => {
   }
 
   console.log("-------------------");
+  console.log(projectId, sprintId, taskId, userId);
   console.log(check);
 
   const result = await Sprint.findOneAndUpdate(
@@ -115,6 +140,7 @@ module.exports = {
   create,
   edit,
   remove,
+  findTasks,
   addTask,
   removeTask,
 };
