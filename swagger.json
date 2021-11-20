@@ -290,7 +290,7 @@
         }
       }
     },
-    "/:projectId/sprints/:sprintId": {
+    "/api/projects/:projectId/sprints/:sprintId": {
       "get": {
         "tags": ["Спринты"],
         "summary": "Получение спринта и задач по id",
@@ -334,7 +334,7 @@
         }
       }
     },
-    "/:projectId/sprints": {
+    "/api/projects/:projectId/sprints": {
       "post": {
         "tags": ["Спринты"],
         "summary": "Добавление спринта",
@@ -357,7 +357,7 @@
         }
       }
     },
-    "/:projectId/sprints/:sprintId/name": {
+    "/api/projects/:projectId/sprints/:sprintId/name": {
       "patch": {
         "tags": ["Спринты"],
         "summary": "Меняем имя спринта",
@@ -385,7 +385,7 @@
         }
       }
     },
-    "/:projectsId/sprints/:sprintsId/tasks": {
+    "/api/projects/:projectsId/sprints/:sprintsId/tasks": {
       "post": {
         "tags": ["Задачи"],
         "summary": "Добавление задачи",
@@ -408,7 +408,7 @@
         }
       }
     },
-    "/:projectId/sprints/:sprintId/tasks/:taskId": {
+    "/api/projects/:projectId/sprints/:sprintId/tasks/:taskId": {
       "delete": {
         "tags": ["Задачи"],
         "summary": "Удаление задачи по id",
