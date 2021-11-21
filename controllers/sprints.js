@@ -148,6 +148,32 @@ const addTask = async (req, res, next) => {
   }
 };
 
+// projectId, sprintId, taskId, userId;
+
+const editTask = async (req, res, next) => {
+  try {
+    const data = await SprintsModel.editTask(
+      req.params.projectId,
+      req.params.sprintId,
+      req.params.taskId,
+      req.user._id,
+      req.body
+    );
+
+    if (data) {
+      return res.json({
+        status: "success",
+        code: 200,
+        data,
+      });
+    }
+
+    return next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const removeTask = async (req, res, next) => {
   try {
     const data = await SprintsModel.removeTask(
@@ -178,5 +204,6 @@ module.exports = {
   remove,
   findTasks,
   addTask,
+  editTask,
   removeTask,
 };

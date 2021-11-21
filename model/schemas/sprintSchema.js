@@ -4,11 +4,15 @@ const taskSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Set name for task"],
+      // required: [true, "Set name for task"],
     },
     sheduledHours: {
       type: Number,
-      required: [true, "Set sheduled hours for task"],
+      // required: [true, "Set sheduled hours for task"],
+    },
+    spendedHours: {
+      type: Number,
+      default: 0,
     },
   },
   { versionKey: false, timestamps: true }
@@ -18,7 +22,7 @@ const sprintSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Set name for project"],
+      required: [true, "Set name for sprint"],
     },
     endDate: {
       type: Date,
