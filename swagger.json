@@ -435,6 +435,32 @@
       }
     },
     "/api/projects/:projectId/sprints/:sprintId/tasks/:taskId": {
+      "patch": {
+        "tags": ["Задачи"],
+        "summary": "Изменение выполненных часов в задаче",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Изменяем затраченные часы через запрос в body.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "spendedHours": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
       "delete": {
         "tags": ["Задачи"],
         "summary": "Удаление задачи по id",
