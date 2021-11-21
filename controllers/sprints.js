@@ -108,7 +108,9 @@ const findTasks = async (req, res, next) => {
       req.params.sprintId,
       req.user._id
     );
-    // console.log(result);
+
+    console.log(data);
+
     if (data) {
       return res.json({
         status: "success",
