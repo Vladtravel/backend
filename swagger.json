@@ -406,6 +406,32 @@
             "description": "successful operation"
           }
         }
+      },
+      "get": {
+        "tags": ["Задачи"],
+        "summary": "Поиск задач по имени",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Ищем через searchQuery в body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "searchQuery": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
       }
     },
     "/api/projects/:projectId/sprints/:sprintId/tasks/:taskId": {

@@ -77,15 +77,20 @@ const findTasks = async (body, projectId, sprintId, userId) => {
     return false;
   }
 
-  const result = await Sprint.find(
-    { _id: sprintId, project: projectId }
-    // { $push: { tasks: body } },
-    // { new: true }
-  );
+  const result = await Sprint.find({
+    _id: sprintId,
+    project: projectId,
+  });
 
-  console.log(result);
-
-  return result;
+  if (body.searchQuery) {
+    return result
+      .flatMap((doc) => doc.tasks)
+      .filter((task) =>
+        task.name.toLowerCase().includes(body.searchQuery.toLowerCase())
+      );
+  } else {
+    return result.flatMap((doc) => doc.tasks);
+  }
 };
 
 const addTask = async (body, projectId, sprintId, userId) => {

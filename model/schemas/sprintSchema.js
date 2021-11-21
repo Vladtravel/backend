@@ -4,10 +4,11 @@ const taskSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Set name for project"],
+      required: [true, "Set name for task"],
     },
     sheduledHours: {
       type: Number,
+      required: [true, "Set sheduled hours for task"],
     },
   },
   { versionKey: false, timestamps: true }
