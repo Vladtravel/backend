@@ -52,6 +52,12 @@ router.post(
   SprintsController.addTask
 );
 
+router.patch(
+  "/:projectId/sprints/:sprintId/tasks/:taskId",
+  guard,
+  SprintsController.editTask
+);
+
 router.delete(
   "/:projectId/sprints/:sprintId/tasks/:taskId",
   guard,

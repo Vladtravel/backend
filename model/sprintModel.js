@@ -117,6 +117,28 @@ const addTask = async (body, projectId, sprintId, userId) => {
   return result;
 };
 
+const editTask = async (projectId, sprintId, taskId, userId, body) => {
+  const check = await Project.findOne({ _id: projectId, owners: userId });
+
+  if (!check.owners.includes(userId)) {
+    return false;
+  }
+
+  const result = await Sprint.findOne({
+    _id: sprintId,
+    project: projectId,
+  }).then((doc) => {
+    const task = doc.tasks.id(taskId);
+    console.log(task);
+
+    task.spendedHours = body.spendedHours;
+
+    return doc.save();
+  });
+
+  return result;
+};
+
 const removeTask = async (projectId, sprintId, taskId, userId) => {
   const check = await Project.findOne({ _id: projectId, owners: userId });
 
@@ -124,17 +146,11 @@ const removeTask = async (projectId, sprintId, taskId, userId) => {
     return false;
   }
 
-  console.log("-------------------");
-  console.log(projectId, sprintId, taskId, userId);
-  console.log(check);
-
   const result = await Sprint.findOneAndUpdate(
     { _id: sprintId, project: projectId },
     { $pull: { tasks: { _id: taskId } } },
     { new: true }
   );
-
-  console.log(result);
 
   return result;
 };
@@ -147,5 +163,6 @@ module.exports = {
   remove,
   findTasks,
   addTask,
+  editTask,
   removeTask,
 };
