@@ -1,7 +1,7 @@
 const Project = require("../model/schemas/projectSchema");
 
 const findAll = async (option) => {
-  return await Project.find(option);
+  return await Project.find(option).populate("owners", "email");
 };
 
 const findById = async (options) => {
