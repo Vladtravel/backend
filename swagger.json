@@ -146,6 +146,19 @@
         }
       }
     },
+    "/users/all": {
+      "get": {
+        "tags": ["Пользователь"],
+        "summary": "Получить имейлы пользователей",
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/api/projects": {
       "post": {
         "tags": ["Проекты"],
