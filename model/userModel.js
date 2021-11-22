@@ -1,5 +1,11 @@
 const User = require("../model/schemas/userSchema");
 
+const findAllEmails = async () => {
+  const result = await User.find({}, "email");
+
+  return result.flatMap((doc) => doc.email);
+};
+
 const findByEmail = async (email) => {
   return await User.findOne({ email });
 };
@@ -26,10 +32,14 @@ const updateAvatar = async (id, avatar, idCloudAvatar = null) => {
 };
 
 const updateVerifyToken = async (id, verify, verifyToken) => {
-  return await User.updateOne({ _id: id }, { verify, verifyToken: verifyToken });
+  return await User.updateOne(
+    { _id: id },
+    { verify, verifyToken: verifyToken }
+  );
 };
 
 module.exports = {
+  findAllEmails,
   findByEmail,
   create,
   findById,

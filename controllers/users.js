@@ -120,18 +120,21 @@ const currentUser = async (req, res, next) => {
 
 const saveAvatarUserToCloud = async (req) => {
   const pathFile = req.file.path;
-  const { public_id: idCloudAvatar, secure_url: avatarUrl } = await uploadToCloud(pathFile, {
-    public_id: req.user.idCloudAvatar?.replace("Avatars/", ""),
-    folder: "Avatars",
-    transformation: { width: 250, height: 250, crop: "pad" },
-  });
+  const { public_id: idCloudAvatar, secure_url: avatarUrl } =
+    await uploadToCloud(pathFile, {
+      public_id: req.user.idCloudAvatar?.replace("Avatars/", ""),
+      folder: "Avatars",
+      transformation: { width: 250, height: 250, crop: "pad" },
+    });
   await fs.unlink(pathFile);
   return { idCloudAvatar, avatarUrl };
 };
 
 const verify = async (req, res, next) => {
   try {
-    const user = await Users.findByVerifyTokenEmail(req.params.verificationToken);
+    const user = await Users.findByVerifyTokenEmail(
+      req.params.verificationToken
+    );
     if (user) {
       await Users.updateVerifyToken(user.id, true, null);
       return res.redirect("https://goitapp.netlify.app/login");
@@ -170,6 +173,22 @@ const repeatEmailVerify = async (req, res, next) => {
   }
 };
 
+const findAllEmails = async (req, res, next) => {
+  try {
+    const data = await Users.findAllEmails();
+
+    if (data) {
+      return res.json({
+        status: "success",
+        code: 200,
+        data,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   signup,
   login,
@@ -178,4 +197,5 @@ module.exports = {
   verify,
   repeatEmailVerify,
   saveAvatarUserToCloud,
+  findAllEmails,
 };

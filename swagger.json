@@ -146,6 +146,19 @@
         }
       }
     },
+    "/users/all": {
+      "get": {
+        "tags": ["Пользователь"],
+        "summary": "Получить имейлы пользователей",
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/api/projects": {
       "post": {
         "tags": ["Проекты"],
@@ -190,7 +203,7 @@
         }
       }
     },
-    "/api/projects/:id": {
+    "/api/projects/:projectId": {
       "get": {
         "tags": ["Проекты"],
         "summary": "Получение проекта и спринтов по id",
@@ -234,7 +247,7 @@
         }
       }
     },
-    "/api/projects/:id/name": {
+    "/api/projects/:projectId/name": {
       "patch": {
         "tags": ["Проекты"],
         "summary": "Изменение имени проекта",
@@ -262,7 +275,7 @@
         }
       }
     },
-    "/api/projects/:id/owners": {
+    "/api/projects/:projectId/owners": {
       "post": {
         "tags": ["Проекты"],
         "summary": "Добавление пользователя в проект по email",
@@ -272,6 +285,34 @@
             "in": "body",
             "name": "body",
             "description": "Добавляем обьект пользователя.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/api/projects/:projectId/owners/verify": {
+      "post": {
+        "tags": ["Проекты"],
+        "summary": "Добавление пользователя в проект по email (с подтверждением)",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Отправляем письмо пользователю.",
             "required": true,
             "schema": {
               "type": "object",

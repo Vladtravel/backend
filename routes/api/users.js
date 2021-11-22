@@ -27,4 +27,6 @@ router.get("/current", guard, userController.currentUser);
 router.get("/verify/:verificationToken", userController.verify);
 router.post("/verify", userController.repeatEmailVerify);
 
+router.get("/all", guard, userController.findAllEmails);
+
 module.exports = router;

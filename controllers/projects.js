@@ -1,6 +1,8 @@
 const ProjectModel = require("../model/projectModel");
 const SprintModel = require("../model/sprintModel");
 const UserModel = require("../model/userModel");
+const EmailService = require("../service/email");
+require("dotenv").config();
 
 const getAll = async (req, res, next) => {
   try {
@@ -130,6 +132,59 @@ const remove = async (req, res, next) => {
   }
 };
 
+// Добавление в проект по email
+
+//name, projectId, userId
+
+const sendProjectEmail = async (req, res, next) => {
+  try {
+    const newOwner = await UserModel.findByEmail(req.body.email);
+
+    if (newOwner) {
+      const newOwnerId = newOwner._id;
+
+      const emailService = new EmailService(process.env.NODE_ENV);
+
+      await emailService.sendProjectEmail(
+        req.body.email,
+        req.params.projectId,
+        newOwnerId
+      );
+
+      return res.json({
+        status: "success",
+        code: 200,
+        message: "invite sent",
+      });
+    }
+
+    console.log(newOwner);
+
+    next();
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const addOwnerByEmail = async (req, res, next) => {
+  try {
+    console.log("Validation start", req.params.projectId, req.params.userId);
+
+    const updatedProject = await ProjectModel.addOwnerByEmail(
+      req.params.projectId,
+      req.params.userId
+    );
+    console.log(updatedProject);
+    if (updatedProject) {
+      return res.redirect("https://goitapp.netlify.app");
+    }
+
+    return next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
@@ -137,4 +192,6 @@ module.exports = {
   create,
   addOwner,
   remove,
+  sendProjectEmail,
+  addOwnerByEmail,
 };
