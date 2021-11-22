@@ -53,6 +53,24 @@ const remove = async (id, userId) => {
   }
 };
 
+// Добавление в проект по email
+
+const addOwnerByEmail = async (projectId, newOwnerId) => {
+  // const check = await Project.findOne({ _id: projectId, owners: userId });
+
+  // if (check.owners.includes(newOwnerId)) {
+  //   return false;
+  // }
+
+  const result = await Project.findOneAndUpdate(
+    { _id: projectId },
+    { $push: { owners: newOwnerId } },
+    { new: true }
+  );
+
+  return result;
+};
+
 module.exports = {
   findAll,
   findById,
@@ -60,4 +78,5 @@ module.exports = {
   edit,
   addOwner,
   remove,
+  addOwnerByEmail,
 };

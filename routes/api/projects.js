@@ -64,4 +64,14 @@ router.delete(
   SprintsController.removeTask
 );
 
+// Добавление в проект по email
+
+router.post(
+  "/:projectId/owners/verify",
+  guard,
+  ProjectsController.sendProjectEmail
+);
+
+router.get("/verify/:projectId/:userId", ProjectsController.addOwnerByEmail);
+
 module.exports = router;
