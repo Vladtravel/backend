@@ -24,6 +24,10 @@ const sprintSchema = new Schema(
       type: String,
       required: [true, "Set name for sprint"],
     },
+    startDate: {
+      type: Date,
+      default: Date.now,
+    },
     endDate: {
       type: Date,
     },
